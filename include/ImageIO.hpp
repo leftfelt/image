@@ -1,5 +1,4 @@
-#ifndef IMAGEIO_INCLUDE
-#define IMAGEIO_INCLUDE
+#pragma once
 
 #include <Image.hpp>
 #include <string>
@@ -12,5 +11,3 @@ public:
 	bool static LoadPPM(Image &image, std::string filename);
 	bool static Save(Image &image, std::string filename);
 };
-
-#endif

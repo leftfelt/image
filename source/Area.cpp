@@ -49,19 +49,9 @@ int Area::Height(){
 
 
 bool Area::HitCheck(int x,int y){
-	if( mx <= x && x <= mx+mwidth && my <= y && y <= my+mheight){
-		return true;
-	}
-	return false;
+	return mx <= x && x <= mx+mwidth && my <= y && y <= my+mheight;
 }
 
 bool Area::HitCheck(Area area){
-	if( area.HitCheck(mx,my) ||
-		area.HitCheck(my+mwidth,my) ||
-		area.HitCheck(my,my+mheight) ||
-		area.HitCheck(my+mwidth,my+mheight) 
-		){
-		return true;
-	}
-	return false;
+	return area.HitCheck(mx,my) ||	area.HitCheck(my+mwidth,my) || area.HitCheck(my,my+mheight) || area.HitCheck(my+mwidth,my+mheight);
 }

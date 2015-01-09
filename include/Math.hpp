@@ -1,5 +1,4 @@
-#ifndef MATHECLASS_INCLUDE
-#define MATHECLASS_INCLUDE
+#pragma once
 
 #include <time.h>
 #include <stdlib.h>
@@ -105,7 +104,7 @@ template<typename T> double Math::average(std::vector<T> vector){
 
 
 template<typename T> double Math::variance(std::vector<T> vector){
-	double sum;
+	double sum = 0.0;
 	double average = Math::average(vector);
 	for(int i = 0 ; i < (signed)vector.size() ; i++){
 		double temp = vector[i] - average;
@@ -113,8 +112,3 @@ template<typename T> double Math::variance(std::vector<T> vector){
 	}
 	return sum / (double)vector.size();
 }
-
-
-
-
-#endif

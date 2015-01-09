@@ -1,5 +1,4 @@
-#ifndef BIIMAGECLASS_INCLUDE
-#define BIIMAGECLASS_INCLUDE
+#pragma once
 
 #include <Pixel.hpp>
 #include <Point.hpp>
@@ -59,14 +58,12 @@ public:
 inline void Image::Put(int x, int y, Pixel pixel){
 	x = ((x < 0)? this->Width()+x : x)%this->Width();
 	y = ((y < 0)? this->Height()+y : y)%this->Height();
-	mimage.at(x+y*this->Width()) = pixel;
+	mimage.at((ulong)x+y*this->Width()) = pixel;
 }
 
 inline Pixel Image::Get(int x,int y){
 	x = ((x < 0)? this->Width()+x : x)%this->Width();
 	y = ((y < 0)? this->Height()+y : y)%this->Height();
-	if( this->clearColor == mimage.at(x+y*this->Width()) ) return Pixel();
-	return mimage.at(x+y*this->Width());
+	if( this->clearColor == mimage.at((ulong)x+y*this->Width()) ) return Pixel();
+	return mimage.at((ulong)x+y*this->Width());
 }
-
-#endif

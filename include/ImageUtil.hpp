@@ -1,5 +1,4 @@
-#ifndef IMAGEUTILCLASS_INCLUDE
-#define IMAGEUTILCLASS_INCLUDE
+#pragma once
 
 #include <map>
 #include <Image.hpp>
@@ -15,8 +14,8 @@ private:
 	int static Lookup_update(int i,int * label);
 	void static filtering(Image &image, float *filter, int filter_size[2], int direction[2]);
 	float static convolution(Image &image, float *filter, int x, int y, int filter_size[2], int direction[2]);
-	float static derivativesGaussian(int x, int y, float sigma); 
-	float static Gaussian(int x, int y, float sigma);
+	double static derivativesGaussian(int x, int y, float sigma);
+	double static Gaussian(int x, int y, float sigma);
 public:
 	void static Shrink(Image &image);
 	void static Expand(Image &image);
@@ -54,13 +53,6 @@ public:
 	int static Labeling(Image &image);
 	int static SamplingObject(Image &image, int label);
 	int static SamplingLargeObject(Image &image);
-	double static getBulr(Image &image); 
-	void static costomBinalize(Image &image, Pixel attention, Pixel sigma); 
-	/** ImageIO?????????? bitmap???????????? ppm?`?????
-	bool static Save(biImage &image, std::string filename, short bitCount = 24, int dataoffset = 54);
-	bool static Load(biImage &image, std::string filename);
-	*/
+	double static getBulr(Image &image);
 	
 };
-
-#endif

@@ -57,7 +57,7 @@ void Image::Create(int width, int height){
 	this->height = height;
 
 	
-	mimage.resize(this->width * this->height);
+	mimage.resize((ulong)this->width * this->height);
 }
 
 void Image::Paste(int x, int y, Image &image, int mix_rate){
@@ -235,7 +235,7 @@ Image Image::operator+=(Image image){
 	
 	for(int j = 0 ; j < height ; j++){
 		for(int i = 0 ; i < width ; i++){
-			this->mimage.at(i+j*width) = this->mimage.at(i+j*width) + image.mimage.at(i+j*width);
+			this->mimage.at((ulong)i+j*width) = this->mimage.at((ulong)i+j*width) + image.mimage.at((ulong)i+j*width);
 		}
 	}
 
@@ -252,7 +252,7 @@ Image Image::operator-=(Image image){
 
 	for(int j = 0 ; j < height ; j++){
 		for(int i = 0 ; i < width ; i++){
-			this->mimage.at(i+j*width) = this->mimage.at(i+j*width) - image.mimage.at(i+j*width);
+			this->mimage.at((ulong)i+j*width) = this->mimage.at((ulong)i+j*width) - image.mimage.at((ulong)i+j*width);
 		}
 	}
 
@@ -268,7 +268,7 @@ Image Image::operator*=(Image image){
 
 	for(int j = 0 ; j < height ; j++){
 		for(int i = 0 ; i < width ; i++){
-			this->mimage.at(i+j*width) = this->mimage.at(i+j*width) * image.mimage.at(i+j*width);
+			this->mimage.at((ulong)i+j*width) = this->mimage.at((ulong)i+j*width) * image.mimage.at((ulong)i+j*width);
 		}
 	}
 
@@ -285,7 +285,7 @@ Image Image::operator/=(Image image){
 
 	for(int j = 0 ; j < height ; j++){
 		for(int i = 0 ; i < width ; i++){
-			this->mimage.at(i+j*width) = this->mimage.at(i+j*width) / image.mimage.at(i+j*width);
+			this->mimage.at((ulong)i+j*width) = this->mimage.at((ulong)i+j*width) / image.mimage.at((ulong)i+j*width);
 		}
 	}
 
@@ -294,28 +294,28 @@ Image Image::operator/=(Image image){
 
 Image Image::operator+=(Pixel pixel){	
 	Image::for_each(*this,[&](int i, int j){
-		this->mimage.at(i+j*this->Width()) = this->mimage.at(i+j*this->Width()) + pixel;
+		this->mimage.at((ulong)i+j*this->Width()) = this->mimage.at((ulong)i+j*this->Width()) + pixel;
 	});
 	return *this;
 }
 
 Image Image::operator-=(Pixel pixel){	
 	Image::for_each(*this,[&](int i, int j){
-		this->mimage.at(i+j*this->Width()) = this->mimage.at(i+j*this->Width()) - pixel;
+		this->mimage.at((ulong)i+j*this->Width()) = this->mimage.at((ulong)i+j*this->Width()) - pixel;
 	});
 	return *this;
 }
 
 Image Image::operator*=(Pixel pixel){	
 	Image::for_each(*this,[&](int i, int j){
-		this->mimage.at(i+j*this->Width()) = this->mimage.at(i+j*this->Width()) * pixel;
+		this->mimage.at((ulong)i+j*this->Width()) = this->mimage.at((ulong)i+j*this->Width()) * pixel;
 	});
 	return *this;
 }
 
 Image Image::operator/=(Pixel pixel){	
 	Image::for_each(*this,[&](int i, int j){
-		this->mimage.at(i+j*this->Width()) = this->mimage.at(i+j*this->Width()) / pixel;
+		this->mimage.at((ulong)i+j*this->Width()) = this->mimage.at((ulong)i+j*this->Width()) / pixel;
 	});
 	return *this;
 }

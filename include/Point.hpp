@@ -1,5 +1,4 @@
-#ifndef POINTCLASS_INCLUDE
-#define POINTCLASS_INCLUDE
+#pragma once
 
 #define PointList std::vector<Point>
 /*
@@ -10,8 +9,8 @@ private:
 	int my;			
 public:
 	Point();
-	Point(int x, int y);		
-	void Pos(int x, int y);				
+	Point(int x, int y);
+	void Pos(int x, int y);
 	int X();							
 	int Y();							
 
@@ -31,5 +30,3 @@ public:
 	Point operator*=(int value);
 	Point operator/=(int value);
 };
-
-#endif

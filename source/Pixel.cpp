@@ -87,27 +87,27 @@ Pixel Pixel::operator/=(Pixel pixel){
 
 
 Pixel Pixel::operator+(int value){
-	this->Red(  Math::limit(this->Red() + value,0,255) );
-	this->Green(  Math::limit(this->Green() + value,0,255) );
-	this->Blue(  Math::limit(this->Blue() + value,0,255) );
+	this->Red(  (unsigned char)Math::limit(this->Red() + value,0,255) );
+	this->Green(  (unsigned char)Math::limit(this->Green() + value,0,255) );
+	this->Blue(  (unsigned char)Math::limit(this->Blue() + value,0,255) );
 	return *this;
 }
 Pixel Pixel::operator-(int value){
-	this->Red(  Math::limit(this->Red() - value,0,255) );
-	this->Green(  Math::limit(this->Green() - value,0,255) );
-	this->Blue(  Math::limit(this->Blue() - value,0,255) );
+	this->Red(  (unsigned char)Math::limit(this->Red() - value,0,255) );
+	this->Green(  (unsigned char)Math::limit(this->Green() - value,0,255) );
+	this->Blue(  (unsigned char)Math::limit(this->Blue() - value,0,255) );
 	return *this;
 }
 Pixel Pixel::operator*(int value){
-	this->Red(  Math::limit(this->Red() * value,0,255) );
-	this->Green(  Math::limit(this->Green() * value,0,255) );
-	this->Blue(  Math::limit(this->Blue() * value,0,255) );
+	this->Red(  (unsigned char)Math::limit(this->Red() * value,0,255) );
+	this->Green(  (unsigned char)Math::limit(this->Green() * value,0,255) );
+	this->Blue(  (unsigned char)Math::limit(this->Blue() * value,0,255) );
 	return *this;
 }
 Pixel Pixel::operator/(int value){
-	this->Red(  Math::limit(this->Red() / value,0,255) );
-	this->Green(  Math::limit(this->Green() / value,0,255) );
-	this->Blue(  Math::limit(this->Blue() / value,0,255) );
+	this->Red( (unsigned char)Math::limit(this->Red() / value,0,255) );
+	this->Green(  (unsigned char)Math::limit(this->Green() / value,0,255) );
+	this->Blue(  (unsigned char)Math::limit(this->Blue() / value,0,255) );
 	return *this;
 }
 

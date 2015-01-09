@@ -1,5 +1,4 @@
-#ifndef PIXELCLASS_INCLUDE
-#define PIXELCLASS_INCLUDE
+#pragma once
 
 #include <Math.h>
 /*
@@ -72,7 +71,7 @@ inline unsigned char Pixel::Blue(){
 	return this->blue;
 }
 inline unsigned char Pixel::Lightness(){
-	return ( this->Red() + this->Green() + this->Blue() ) / 3;
+	return (unsigned char)(( this->Red() + this->Green() + this->Blue() ) / 3);
 }
 inline int Pixel::Label(){
 	return this->label;
@@ -179,5 +178,3 @@ inline unsigned char Pixel::V(){
 	}
 	return (unsigned char)(max * 100);
 }
-
-#endif

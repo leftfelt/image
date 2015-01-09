@@ -3,13 +3,13 @@
 
 float ImageUtil::laplacian_filter[9] = {-1,-1,-1, -1, 8,-1, -1,-1,-1};
 
-float ImageUtil::Gaussian(int x, int y, float sigma){
-	return 1.0/(2.0*Math::Pi*sigma) * exp( -(pow((float)x, 2)+pow((float)y, 2))/(2.0*pow((float)sigma, 2)) );
+double ImageUtil::Gaussian(int x, int y, float sigma){
+	return 1.0/(2.0*Math::Pi*sigma) * exp( -(pow((float)x, 2)+pow((float)y, 2))/(2.0*pow(sigma, 2)) );
 }
 
 
-float ImageUtil::derivativesGaussian(int x, int y, float sigma){
-	return (float)(-x)/(2.0*Math::Pi*pow((float)sigma, 4)) * exp( -(pow((float)x, 2)+pow((float)y, 2))/(2.0*pow((float)sigma, 2)) );
+double ImageUtil::derivativesGaussian(int x, int y, float sigma){
+	return -x/(2.0*Math::Pi*pow(sigma, 4)) * exp( -(pow((float)x, 2)+pow((float)y, 2))/(2.0*pow(sigma, 2)) );
 }
 
 double ImageUtil::getBulr(Image &image){
@@ -188,7 +188,7 @@ int ImageUtil::Thinning(Image &image){
 						if(mask[mask_num][k] != -1){
 							int pixel = mask[mask_num][k] * 255;
 							
-							if(image.Get(i+(k%3)-1,j+(k/3)-1) != Pixel(pixel))break;
+							if(image.Get(i+(k%3)-1,j+(k/3)-1) != Pixel((unsigned char)pixel))break;
 						}
 					}
 					
@@ -436,9 +436,9 @@ void ImageUtil::Incline(Image &image, double R,double G,double B){
 			image.Put(
 				i,j,
 				Pixel(
-					(int)(R * image.Get(i,j).Red()),
-					(int)(G * image.Get(i,j).Green()),
-					(int)(B * image.Get(i,j).Blue())
+					(unsigned char)(R * image.Get(i,j).Red()),
+					(unsigned char)(G * image.Get(i,j).Green()),
+					(unsigned char)(B * image.Get(i,j).Blue())
 				)
 			);
 		}
@@ -450,7 +450,7 @@ void ImageUtil::filtering(Image &image, float *filter, int filter_size[2], int d
 	int i, j, height = image.Height(), width = image.Width();
 	for(j = 0 ; j < height ; j++){
 		for(i = 0 ; i < width ; i++){
-			temp.Put(i,j,fabs(ImageUtil::convolution(image, filter, i, j, filter_size, direction)));
+			temp.Put(i,j,(unsigned char)fabs(ImageUtil::convolution(image, filter, i, j, filter_size, direction)));
 		}
 	}
 	image = temp;
@@ -503,13 +503,13 @@ void ImageUtil::Sobel(Image &image){
 	for(int j = 0 ; j < height ; j++){
 		for(int i = 0 ; i < width ; i++){
 			
-			dx = ImageUtil::convolution(image, filter_x, i, j, filter_size,direction_x);
-			dy = ImageUtil::convolution(image, filter_y, i, j, filter_size,direction_y);
+			dx = (int)ImageUtil::convolution(image, filter_x, i, j, filter_size,direction_x);
+			dy = (int)ImageUtil::convolution(image, filter_y, i, j, filter_size,direction_y);
 
 			gray = abs(dx)+abs(dy);
 
 			if(gray > graylevel) gray = graylevel;
-			outimage.Put(i,j,Pixel(gray));
+			outimage.Put(i,j,Pixel((unsigned char)gray));
 		}
 	}
 	image = outimage;
@@ -532,7 +532,7 @@ void ImageUtil::Gaussian(Image &image, float sigma){
 	for(int i = 0 ; i < 9 ; i++){
 		ix = i%3-1;
 		iy = i/3-1;
-		gaussian_filter[i] = ImageUtil::Gaussian(ix, iy, sigma);
+		gaussian_filter[i] = (float)ImageUtil::Gaussian(ix, iy, sigma);
 	}
 
 	ImageUtil::filtering(image, gaussian_filter,filter_size, direction);
@@ -550,13 +550,13 @@ PointList ImageUtil::Harris(Image &image, float sigma, float threshold){
 	Image imx = image, imy = image;
 	
 	for(int i = 0 ; i < 3 ; i++){
-		gaussian_x[i] = ImageUtil::derivativesGaussian(i-1, 0, sigma);
+		gaussian_x[i] = (float)ImageUtil::derivativesGaussian(i-1, 0, sigma);
 	}
 
 	for(int i = 0 ; i < 9 ; i++){
 		ix = i%3-1;
 		iy = i/3-1;
-		gaussian[i] = ImageUtil::Gaussian(ix, iy, sigma);
+		gaussian[i] = (float)ImageUtil::Gaussian(ix, iy, sigma);
 	}
 
 	ImageUtil::filtering(imx, gaussian_x,filter_size, direction_x);
@@ -616,7 +616,7 @@ void ImageUtil::Contrast(Image &image){
 			if( image.Get(i,j).Lightness() >= 0 && image.Get(i,j).Lightness() < a){
 				image.Put(i,j,Pixel(0));
 			}else if(image.Get(i,j).Lightness() >=a && image.Get(i,j).Lightness() <= b){
-				image.Put(i,j,Pixel( (int)(255 * ((image.Get(i,j).Lightness() - a) / (double)(b - a))) ));
+				image.Put(i,j,Pixel( (unsigned char)(255 * ((image.Get(i,j).Lightness() - a) / (double)(b - a))) ));
 			}else if(image.Get(i,j).Lightness() > b && image.Get(i,j).Lightness() <= 255){
 				image.Put(i,j,Pixel(255));
 			}

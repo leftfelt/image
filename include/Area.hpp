@@ -1,5 +1,4 @@
-#ifndef _AREA_INCLUDE
-#define _AREA_INCLUDE
+#pragma once
 
 #include <math.h>
 
@@ -26,5 +25,3 @@ public:
 	bool HitCheck(int x,int y);				
 	bool HitCheck(Area area);				
 };
-
-#endif
