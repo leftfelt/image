@@ -56,6 +56,6 @@ public:
 	Pixel operator*=(unsigned char value);
 	Pixel operator/=(unsigned char value);
 
-	bool operator==(Pixel pixel);
+	bool operator==(Pixel pixel) const;
 	bool operator!=(Pixel pixel);
 };

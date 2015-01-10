@@ -52,15 +52,15 @@ int Pixel::Label(){
 
 void Pixel::Red(unsigned char red){
 	this->empty = false;
-	this->red = Math::limit(red, (unsigned char)0, (unsigned char)255);
+	this->red = red;
 }
 void Pixel::Green(unsigned char green){
 	this->empty = false;
-	this->green = Math::limit(green, (unsigned char)0, (unsigned char)255);
+	this->green = green;
 }
 void Pixel::Blue(unsigned char blue){
 	this->empty = false;
-	this->blue = Math::limit(blue, (unsigned char)0, (unsigned char)255);
+	this->blue = blue;
 }
 void Pixel::Lightness(unsigned char lightness){
 	this->empty = false;
@@ -244,11 +244,11 @@ Pixel Pixel::operator/=(unsigned char value){
 
 
 
-bool Pixel::operator==(Pixel pixel){
+bool Pixel::operator==(Pixel pixel) const {
 	return (this->empty == pixel.empty && (
-				this->Red()	 == pixel.Red()
-				&& this->Green() == pixel.Green()
-				&& this->Blue()	 == pixel.Blue()
+				this->red	 == pixel.Red()
+				&& this->green == pixel.Green()
+				&& this->blue	 == pixel.Blue()
 			));
 }
 
