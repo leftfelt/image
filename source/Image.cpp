@@ -30,6 +30,22 @@ Image::Image(int width, int height){
 	this->Create(width,height);
 }
 
+Image::Image(int width, int height, std::vector<Pixel> image){
+	this->init();
+	this->Create(width,height);
+
+	this->mimage = image;
+}
+
+Image::Image(int width, int height, std::vector<unsigned char> image){
+	this->init();
+	this->Create(width,height);
+
+	Image::for_each(*this, [&](int x, int y){
+		this->Put(x, y, Pixel(image.at((ulong)x+y*width)));
+	});
+}
+
 Image::Image(const Image &image){
 	mimage = image.mimage;
 	this->clearColor = image.clearColor;
@@ -122,8 +138,9 @@ void Image::Size(int width ,int height ){
 	image.Create(width,height);
 
 	Image::for_each(image,[&](int i,int j){
-		image.Put(i,j,this->Get((int)(i*wRate),(int)(j*hRate)));
+		image.Put(i,j,this->Get((int)round(i*wRate),(int)round(j*hRate)));
 	});
+
 	image.Clear(this->clearColor);
 	*this = image;
 }
@@ -131,18 +148,23 @@ void Image::Size(int width ,int height ){
 Image Image::Rotate(int angle){
 	Image image;
 	int rx,ry;
-	double rad = angle * (3.14159265358979323846 / 180.0);
-	
-	image.Create(Width(),Height());
+	double _sin = Math::Sin(angle), _cos = Math::Cos(angle);
+	int mid_x = this->Width()/2;
+	int mid_y = this->Height()/2;
+
+	image.Create(Width(), Height());
 	image = this->clearColor;
 	image.Clear(this->clearColor);
 
-	for(int j = -this->Height()/2 ; j <= this->Height()/2 ; j++){
-		for(int i = -this->Width()/2 ; i <= this->Width()/2 ; i++){
-			rx = (int)(this->Width()/2 + i * cos(rad) - j * sin(rad));
-			ry = (int)(this->Height()/2 + i * sin(rad) + j * cos(rad));
-			if(rx < 0 || this->Width() <= rx || ry < 0 || this->Height() <= ry)continue;
-			image.Put(i+this->Width()/2,j+this->Height()/2,Get(rx,ry));
+	for(int j = 0 ; j < this->Height() ; j++){
+		for(int i = 0 ; i < this->Width() ; i++){
+			rx = (int)round(i * _cos - j * _sin + mid_x - mid_x * _cos + mid_y * _sin);
+			ry = (int)round(i * _sin + j * _cos + mid_y - mid_x * _sin - mid_x * _cos);
+			if (rx >= 0 && this->Width() > rx && ry >= 0 && this->Height() > ry) {
+				image.Put(i,j,Get(rx,ry));
+			} else {
+				image.Put(i,j,Pixel(0));
+			}
 		}
 	}
 	return image;
@@ -318,4 +340,8 @@ Image Image::operator/=(Pixel pixel){
 		this->mimage.at((ulong)i+j*this->Width()) = this->mimage.at((ulong)i+j*this->Width()) / pixel;
 	});
 	return *this;
+}
+
+bool Image::operator==(Image image) const {
+	return this->mimage == image.mimage;
 }

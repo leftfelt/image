@@ -1,6 +1,8 @@
 #include <ImageIO.hpp>
 #include <iostream>
 #include <fstream>
+#include <cstdlib>
+#include <string>
 
 bool ImageIO::Save(Image &image, std::string filename){
 	std::ofstream out;
@@ -26,12 +28,12 @@ bool ImageIO::Load(Image &image, std::string filename){
 
 
 bool ImageIO::LoadPPM(Image &image, std::string filename){
-	return true;
-	/*
+	//*
 	std::ifstream in;
 	std::string data;
 	int width, height;
 	unsigned char r,g,b;
+	char *ptr = 0;
 
 	in.open(filename);
 	if(!in) {
@@ -41,8 +43,8 @@ bool ImageIO::LoadPPM(Image &image, std::string filename){
 	while(getline(in, data)) if(data[0] != '#') break;
 	
 	
-	while(in >> data){if(data[0] != '#'){width = std::stoi(data);break;}}
-	while(in >> data){if(data[0] != '#'){height = std::stoi(data);break;}}
+	while(in >> data){if(data[0] != '#'){width = (int)std::strtol(data.c_str(),&ptr,10);break;}}
+	while(in >> data){if(data[0] != '#'){height = (int)std::strtol(data.c_str(),&ptr,10);break;}}
 
 	while(in >> data) if(data[0] != '#') break;
 
@@ -50,15 +52,15 @@ bool ImageIO::LoadPPM(Image &image, std::string filename){
 	
 	for(int y = 0; y < height; y++) {
 		for(int x = 0; x < width; x++) {
-			while(in >> data){if(data[0] != '#'){r = std::stoi(data);break;}}
-			while(in >> data){if(data[0] != '#'){g = std::stoi(data);break;}}
-			while(in >> data){if(data[0] != '#'){b = std::stoi(data);break;}}
+			while(in >> data){if(data[0] != '#'){r = (unsigned char)std::strtol(data.c_str(),&ptr,10);break;}}
+			while(in >> data){if(data[0] != '#'){g = (unsigned char)std::strtol(data.c_str(),&ptr,10);break;}}
+			while(in >> data){if(data[0] != '#'){b = (unsigned char)std::strtol(data.c_str(),&ptr,10);break;}}
 			image.Put(x, y, Pixel(r, g, b));
 		}
 	}
 
 	in.close();
-	*/
+	//*/
 }
 
 bool ImageIO::LoadBitmap(Image &image, std::string filename){

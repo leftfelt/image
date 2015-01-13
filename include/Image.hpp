@@ -18,6 +18,8 @@ public:
 	void static around_each(Image &image, Point point, int around, std::function<void(int x, int y)> func);
 	Image();
 	Image(int width, int height);
+	Image(int width, int height, std::vector<Pixel> image);
+	Image(int width, int height, std::vector<unsigned char> image);
 	Image(const Image &image);
 	~Image();
 	void Create(int width, int height);
@@ -53,6 +55,9 @@ public:
 	Image operator-=(Pixel pixel);
 	Image operator*=(Pixel pixel);
 	Image operator/=(Pixel pixel);
+
+	bool operator==(Image image) const;
+
 };
 
 inline void Image::Put(int x, int y, Pixel pixel){
